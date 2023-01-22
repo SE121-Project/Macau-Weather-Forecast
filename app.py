@@ -65,6 +65,18 @@ def make_r_plot(libraries, sd,cd,dd,ld,rc,rd,rl,rn,rf):
     plt.xlabel("No. Cross Validation")
     return fig
 
+def make_clf_t_plot():
+    fig = plt.figure(figsize=(16,8))
+    index = np.arange(0, 2 * 0.2, 0.2) * 2.5
+    index = index[0:2]
+    bar = plt.bar(index, [clf_score,rfc_score], 0.2, label="Testing Score", color="crimson")
+    plt.xticks( index, ['DecisioTree Score','RandomForest Score'])
+    plt.yticks(np.arange(0, 1, 0.05))
+    # plt.grid(True)
+    plt.xlabel("Model")
+    plt.ylabel("Test score")
+    return fig
+
 def download_clf():
     joblib.dump(clf,"dtc_model.m")
     return "./dtc_model.m"
