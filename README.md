@@ -31,7 +31,6 @@ In this project we use decision tree in *sklearn* library (sklearn.tree.Decision
     - Then take the last data as the testing set to simulate the rainfall condiation.
 - Testing
     - The final test show the accuracy reaches 86% and 88%.
-    ![predict result](./result.png)
 
 ## **Environment**
 - scikit-learn
