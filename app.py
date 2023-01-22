@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import gradio as gr
 import numpy as np
-
+import joblib
 
 missing_values = ["--"]
 data = pd.read_csv('./macau_weather.csv', na_values = missing_values)
@@ -65,6 +65,14 @@ def make_r_plot(libraries, sd,cd,dd,ld,rc,rd,rl,rn,rf):
     plt.xlabel("No. Cross Validation")
     return fig
 
+def download_clf():
+    joblib.dump(clf,"dtc_model.m")
+    return "./dtc_model.m"
+
+def download_rfc():
+    joblib.dump(rfc,"rfc_model.m")
+    return "./rfc_model.m"
+
 table_data, clean_data = make_ra_table(data)
 
 morning_features = ['air_pressure', 'aver_tem', 'humidity',
@@ -72,7 +80,13 @@ morning_features = ['air_pressure', 'aver_tem', 'humidity',
 feature=clean_data[morning_features].copy()
 label = clean_data['rain_accum'].copy()
 X_train,X_test,y_train,y_test = train_test_split(feature,label,test_size=0.33,random_state=324)
-
+clf = DecisionTreeClassifier(random_state=25)
+rfc = RandomForestClassifier(random_state=25, n_estimators=11)
+clf.fit(X_train,y_train)
+rfc.fit(X_train,y_train)
+clf_score = clf.score(X_test, y_test)
+rfc_score = rfc.score(X_test, y_test)
+score = pd.DataFrame([[clf_score,rfc_score],['DecisioTree Score','RandomForest Score']],columns=['DecisioTree Score','RandomForest Score'])
 
 if __name__ == '__main__':
     with gr.Blocks() as demo:
@@ -134,7 +148,23 @@ if __name__ == '__main__':
                         rl=gr.Slider(label="min_samples_leaf of RandomForest", value=10, minimum=1, maximum=50, step=5)
                         rn = gr.Slider(label="n_estimators of RandomForest", value=11, minimum=5, maximum=15, step=1)
                         rf =gr.Slider(label="max_features of RandomForest", value=20,minimun=5, maximum=30, step=1)
-            train = gr.Button(value="Train")
+            with gr.Row():
+                train = gr.Button(value="Train")
             train.click(fn=make_r_plot, inputs=[libraries,sd,cd,dd,ld,rc,rd,rl,rn,rf], outputs=gr.Plot(label = "Vaildation Score Plot"))
-    
-    demo.launch()
+        gr.Markdown("""
+                    ## Testing: 
+                    There are the final testing scores
+                    """)
+        with gr.Row():
+            demo.load(fn=make_clf_t_plot, inputs=None, outputs=gr.Plot(label = "Final Score"))
+        gr.Markdown("""
+                    ## Download Model: 
+                    """)    
+        with gr.Row():
+            with gr.Column():
+                clf_model = gr.Button(value="Download DecisionTree Model")
+                clf_model.click(fn=download_clf, inputs=None, outputs=gr.File(label="DecisionTree Model"))
+            with gr.Column():
+                rfc_model = gr.Button(value="Download RandomForest Model")
+                rfc_model.click(fn=download_rfc, inputs=None, outputs=gr.File(label="RandomForest Model"))
+    demo.launch()  
