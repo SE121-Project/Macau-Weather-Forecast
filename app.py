@@ -159,7 +159,7 @@ if __name__ == '__main__':
                         rd = gr.Slider(label="max_depth of RandomForest", value=4, minimum=1, maximum=10, step=1)
                         rl=gr.Slider(label="min_samples_leaf of RandomForest", value=10, minimum=1, maximum=50, step=5)
                         rn = gr.Slider(label="n_estimators of RandomForest", value=11, minimum=5, maximum=15, step=1)
-                        rf =gr.Slider(label="max_features of RandomForest", value=20,minimun=5, maximum=30, step=1)
+                        rf =gr.Slider(label="max_features of RandomForest", value=20,minimum=5, maximum=30, step=1)
             with gr.Row():
                 train = gr.Button(value="Train")
             train.click(fn=make_r_plot, inputs=[libraries,sd,cd,dd,ld,rc,rd,rl,rn,rf], outputs=gr.Plot(label = "Vaildation Score Plot"))
