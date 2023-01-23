@@ -40,7 +40,7 @@ In this project we use decision tree in *sklearn* library (sklearn.tree.Decision
 - joblib
 
 
-## **Developer**
+## **Members**
 - Developer
     [@IvanMao714](https://huggingface.co/IvanMao714)
 
