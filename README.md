@@ -1,8 +1,35 @@
-# *DecisionTree RandomForest*
-This project use Decision tree to simulate and predict the rain condition in some place (mainly simulate the wether in Macao)
+<h1 align="center">
+    <picture>
+      <img src="./logo.png" width="140">
+    </picture>
+    <br>
+    Macau Weather Forecast
+</h1>
 
+This project use *DecisionTree* and *RandomForest* to simulate and predict the rain condition in some place (mainly simulate the weather in Macao). The model is trained on the data of Macau SMG. 
+
+### Requirements
+
+- Python 3.6 or higher
+
+- scikit-learn
+
+- seaborn
+
+- gradio
+
+- joblib
+
+
+### Usage
+
+1. Clone the repository: git clone https://github.com/SE121-Project/Macau-Weather-Forecast
+2. Install the required packages: pip install -r requirements.txt
+3. pip install jupyter
+4. Enter jupter notebook/ jupyter lab to run decisiontree.ipynb
 
 ## **Content**
+
 - [Background](#Background)
 - [Working method](#Working-method)
     - [Data collecting](#Data-collecting)
@@ -31,13 +58,6 @@ In this project we use decision tree in *sklearn* library (sklearn.tree.Decision
     - Then take the last data as the testing set to simulate the rainfall condiation.
 - Testing
     - The final test show the accuracy reaches 86% and 88%.
-
-## **Environment**
-- scikit-learn
-- pandas
-- matplotlib
-- seaborn
-- joblib
 
 
 ## **Members**
